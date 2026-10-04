@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>البروف | إدارة المركز</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap">
+<style>
+:root{--bg:#f5f7f9;--card:#fff;--tx:#14303f;--mu:#667f90;--bd:rgba(20,70,100,.13);--pri:#1a5f7a;--red:#b3303f;--grn:#1d7a57;--yel:#a8741a;--soft:#e8eff3;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1a22;--card:#16272f;--tx:#e6f1f7;--mu:#8ea8b8;--bd:rgba(255,255,255,.1);--pri:#35b4e6;--red:#ff6b7d;--grn:#3ccb94;--yel:#f0b84a;--soft:#1c3340}}
+:root[data-theme="dark"]{--bg:#16303f;--card:#16272f;--tx:#e6f1f7;--mu:#8ea8b8;--bd:rgba(255,255,255,.1);--pri:#35b4e6;--red:#ff6b7d;--grn:#3ccb94;--yel:#f0b84a;--soft:#1c3340}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:500 16px/1.6 Cairo,Tahoma,Arial,sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:0}
+.app{max-width:640px;margin:0 auto;padding:14px 14px 110px}
+.hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.hd h1{margin:0;font-size:22px;font-weight:700}.mono{width:42px;height:42px;border-radius:10px;background:var(--pri);color:#fff;display:grid;place-items:center;font-weight:700;font-size:22px}.hd small{color:var(--mu);font-weight:600}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;margin-bottom:12px}
+.card h3{margin:0 0 6px;font-size:16px;font-weight:700}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.st{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:10px 6px;text-align:center}
+.st small{display:block;color:var(--mu);font-size:13px}.st b{font-size:16px;font-weight:700}
+.g{color:var(--grn)}.r{color:var(--red)}.m{color:var(--mu)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.act{background:var(--card);border:1px solid var(--bd);border-inline-start:4px solid var(--c);border-radius:10px;padding:16px 12px;font-weight:700;font-size:17px;text-align:start}
+.a1{--c:var(--pri)}.a2{--c:var(--red)}.a3{--c:var(--grn)}.a4{--c:var(--yel)}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-bottom:1px solid var(--bd)}
+.row:last-child{border:0}.row small{display:block;color:var(--mu);font-weight:600;font-size:14px}
+.row .nm{font-weight:700}
+.clk{cursor:pointer}
+.btn{border-radius:8px;padding:8px 14px;font-weight:600;background:var(--pri);color:#fff;font-size:15px;text-decoration:none;display:inline-block}
+.btn.g2{background:var(--grn)}.btn.r2{background:var(--red)}.btn.o{background:var(--soft);color:var(--pri)}
+.big{width:100%;padding:13px;border-radius:10px;font-weight:700;font-size:17px;color:#fff;background:var(--grn);margin-top:12px}
+.big.b{background:var(--pri)}.big.rd{background:var(--red)}
+.in{width:100%;padding:12px;border:2px solid var(--bd);border-radius:12px;background:var(--card);outline:none}
+.in:focus{border-color:var(--pri)}
+label.l{display:block;margin:12px 0 4px;font-weight:700;font-size:16px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:6px}
+.chip{border:2px solid var(--bd);background:var(--card);border-radius:24px;padding:6px 14px;font-size:15px;font-weight:700}
+.chip.on{background:var(--pri);border-color:var(--pri);color:#fff}
+.box{background:var(--soft);border-radius:12px;padding:10px 12px;margin-top:12px;line-height:1.9}
+.emp{text-align:center;color:var(--mu);padding:18px 6px;font-weight:600}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.top{display:flex;align-items:center;gap:10px;margin-bottom:12px}.top h2{margin:0;font-size:22px;font-weight:800}
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;justify-content:center;z-index:50}
+.ov.on{display:flex}
+.sh{background:var(--bg);width:100%;max-width:640px;max-height:92%;overflow:auto;border-radius:22px 22px 0 0;padding:16px 16px calc(20px + env(safe-area-inset-bottom,0px))}
+.sht{display:flex;justify-content:space-between;align-items:center;font-size:21px;font-weight:800;margin-bottom:4px}
+.x{background:var(--card);border:1px solid var(--bd);border-radius:50%;width:38px;height:38px;font-size:16px}
+#toast{position:fixed;left:50%;bottom:90px;transform:translate(-50%,200px);background:#14303f;color:#fff;padding:12px 22px;border-radius:14px;font-weight:700;transition:.25s;z-index:99;max-width:90%;text-align:center}
+#toast.show{transform:translate(-50%,0)}
+textarea.in{min-height:120px;direction:ltr;font-size:12px;font-family:monospace}
+@media print{.nav,.acts,.btn,.chips{display:none}}
+
+.nav{position:fixed;inset-inline:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);z-index:20;padding-bottom:env(safe-area-inset-bottom,0px)}
+.brand{display:none}
+#nav{display:flex;max-width:640px;margin:0 auto}
+.nav button{flex:1;background:none;color:var(--mu);font-size:12px;font-weight:600;padding:9px 0 7px;display:flex;flex-direction:column;align-items:center;gap:2px;position:relative;transition:color .2s,background .2s}
+.nav button svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:transform .25s}
+.nav button.on{color:var(--pri)}.nav button.on svg{transform:translateY(-2px) scale(1.1)}
+.nav button.on::after{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:28px;height:3px;border-radius:0 0 3px 3px;background:var(--pri)}
+body{font-variant-numeric:tabular-nums}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+@keyframes fade{from{opacity:0}}
+@keyframes grow{from{transform:scaleY(0)}}
+@keyframes pop{from{transform:scale(.4);opacity:0}}
+@keyframes load{from{width:0}to{width:100%}}
+.anim>*{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+.anim>*:nth-child(2){animation-delay:.06s}.anim>*:nth-child(3){animation-delay:.12s}.anim>*:nth-child(4){animation-delay:.18s}.anim>*:nth-child(5){animation-delay:.24s}.anim>*:nth-child(6){animation-delay:.3s}
+.ov.on{animation:fade .2s}.ov.on .sh{animation:up .32s cubic-bezier(.2,.8,.2,1)}
+.card,.act,.st{transition:transform .2s,box-shadow .2s}
+.act:hover,.st:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(14,42,59,.12)}
+.act:active,.btn:active,.big:active,.chip:active{transform:scale(.97)}
+.btn,.big,.chip{transition:transform .12s,filter .15s}.btn:hover,.big:hover{filter:brightness(1.08)}
+.row.clk{transition:background .15s;margin:0 -8px;padding-inline:8px;border-radius:8px}.row.clk:hover{background:var(--soft)}
+.pw{display:flex;align-items:center;gap:12px}
+.av{width:38px;height:38px;border-radius:50%;background:var(--soft);color:var(--pri);display:grid;place-items:center;font-style:normal;font-weight:700}
+.lg{display:flex;gap:14px;font-size:13px;color:var(--mu)}.lg i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-inline-end:5px}
+.bar{transform-box:fill-box;transform-origin:bottom}.anim .bar{animation:grow .8s cubic-bezier(.2,.7,.2,1) both}
+#splash{position:fixed;inset:0;background:#0e2a3b;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;z-index:200;transition:opacity .5s,visibility .5s}
+#splash.off{opacity:0;visibility:hidden}
+#splash .mono{width:72px;height:72px;font-size:38px;border-radius:18px;background:#1a7ea3;animation:pop .6s cubic-bezier(.2,1.4,.4,1) both}
+#splash b{font-size:28px}#splash small{color:#8fb0c2}
+.ld{width:140px;height:3px;background:rgba(255,255,255,.15);border-radius:3px;margin-top:18px;overflow:hidden}.ld i{display:block;height:100%;background:#5fc0e6;animation:load 1s ease-out both}
+@media(min-width:900px){
+body{padding-right:240px}
+.nav{inset:0 0 0 auto;width:240px;border:0;background:#0e2a3b;padding:0;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:12px;padding:24px 20px;color:#fff;border-bottom:1px solid rgba(255,255,255,.08)}
+.brand b{display:block;font-size:19px;line-height:1.3}.brand small{color:#8fb0c2;font-weight:500;font-size:12px}
+#nav{flex-direction:column;max-width:none;margin:0;padding:14px 12px;gap:4px}
+.nav button{flex:none;flex-direction:row;gap:12px;font-size:16px;padding:12px 14px;border-radius:10px;color:#a9c2d0}
+.nav button:hover{background:rgba(255,255,255,.06);color:#fff}
+.nav button.on{background:rgba(255,255,255,.1);color:#fff}.nav button.on svg{transform:none}
+.nav button.on::after{left:auto;right:0;top:20%;transform:none;width:3px;height:60%;border-radius:3px;background:#5fc0e6}
+.app{max-width:1000px;padding:26px 30px 40px}.hd .mono{display:none}
+.ov{align-items:center}.sh{border-radius:18px;max-width:520px;max-height:88%}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+
+.ln{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px dashed var(--bd)}.ln:last-child{border:0}
+.ln.tot{font-size:19px;font-weight:800;border:0;border-top:2px solid var(--tx);margin-top:4px;padding-top:12px}.ln.sm{font-size:14px;color:var(--mu)}
+.ht{height:7px;background:var(--soft);border-radius:4px;overflow:hidden}.ht i{display:block;height:100%;background:var(--c,var(--pri));border-radius:4px;transform-origin:right}
+@keyframes wgrow{from{transform:scaleX(0)}}.anim .ht i{animation:wgrow .8s cubic-bezier(.2,.7,.2,1) both}
+.cols{display:grid;gap:12px;margin-bottom:12px}.cols .card{margin:0}@media(min-width:700px){.cols{grid-template-columns:1fr 1fr}}
+.pr{display:none}
+@media print{.pr{display:block;margin-bottom:12px}.noprint,.nav,#splash{display:none!important}body{padding:0!important;background:#fff;color:#000}.card{break-inside:avoid}}
+
+.mkt{--mb:#0a1520;--mc:#193f61;--mt:#e4eef5;--mm:#7f97a8;--mg:#2dd4a7;--mr:#ff5d6c;--mbd:rgba(255,255,255,.08);background:var(--mb);color:var(--mt);border-radius:14px;padding:12px}
+.mh{display:flex;justify-content:space-between;align-items:center;padding:4px 4px 12px}.mh b{font-size:19px;display:block;line-height:1.2}.mh small{color:var(--mm);font-weight:500}
+.live{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--mm)}.live i{width:8px;height:8px;border-radius:50%;background:var(--mg);animation:lp 1.6s infinite}
+@keyframes lp{50%{opacity:.25;transform:scale(1.5)}}
+.mc{background:var(--mc);border:1px solid var(--mbd);border-radius:10px;padding:14px;margin-bottom:12px}
+.mkt .in{background:var(--mb);border-color:var(--mbd);color:var(--mt);color-scheme:dark}
+.mkt .chip{background:transparent;border-color:var(--mbd);color:var(--mm)}.mkt .chip.on{background:var(--mg);border-color:var(--mg);color:#06241b}
+.mkt .btn.o{background:rgba(255,255,255,.08);color:var(--mt)}.mkt .emp{color:var(--mm)}
+.tks{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.tk{background:var(--mc);border:1px solid var(--mbd);border-radius:10px;padding:12px;display:flex;flex-direction:column;gap:2px}
+.tk small{color:var(--mm);font-size:13px}.tk b{font-size:21px;font-weight:800}.tk span{font-size:13px;font-weight:700;color:var(--mm)}
+.up{color:var(--mg)}.dw{color:var(--mr)}
+.mt2{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:8px}.mt2 b{font-size:16px}.mt2 small{color:var(--mm);font-size:12px}
+.chw{position:relative}.tip{position:absolute;top:4px;transform:translateX(-50%);background:#1b3042;border:1px solid var(--mbd);border-radius:8px;padding:6px 10px;font-size:12px;line-height:1.7;pointer-events:none;opacity:0;white-space:nowrap;direction:rtl;text-align:right;transition:opacity .1s}
+.pth{stroke-dasharray:1}.anim .pth{animation:draw 1.3s ease-out both}@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.pls{animation:pls 1.9s infinite}@keyframes pls{from{r:4.5;opacity:.9}to{r:15;opacity:0}}
+.lgd2{display:flex;gap:14px;font-size:12px;color:var(--mm);margin-top:4px}.lgd2 i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-inline-end:5px}
+.cols2{display:grid;gap:12px}@media(min-width:900px){.cols2{grid-template-columns:repeat(3,1fr)}.tks{grid-template-columns:repeat(4,1fr)}}
+.dnw{display:flex;align-items:center;gap:14px;flex-wrap:wrap;justify-content:center}.lgd{display:flex;flex-direction:column;gap:6px;font-size:14px;min-width:120px}
+.lgd div{display:flex;align-items:center;gap:8px}.lgd i{width:10px;height:10px;border-radius:3px}.lgd b{margin-inline-start:auto;color:var(--mm)}
+.anim .dg{transform-box:fill-box;transform-origin:center;animation:dpop .9s cubic-bezier(.2,.8,.2,1) both}@keyframes dpop{from{transform:rotate(-120deg) scale(.6);opacity:0}}
+.tw{overflow-x:auto}.tb{width:100%;border-collapse:collapse;font-size:14px}
+.tb th{color:var(--mm);font-weight:600;text-align:start;padding:9px 8px;border-bottom:1px solid var(--mbd);white-space:nowrap}
+.tb td{padding:9px 8px;border-bottom:1px solid var(--mbd);white-space:nowrap}.tb tbody tr:hover td{background:rgba(255,255,255,.04)}
+.tb tfoot td{font-weight:800;border-top:2px solid var(--mt);border-bottom:0}
+@media print{.mkt{--mb:#fff;--mc:#fff;--mt:#000;--mm:#444;--mg:#0a7a55;--mr:#b3303f;--mbd:#ccc}.tip,.live{display:none}}
+
+html{scroll-behavior:smooth}
+.btn,.big,.chip,.act,.nav button,.x{position:relative;overflow:hidden}
+.rp{position:absolute;border-radius:50%;background:currentColor;opacity:.28;transform:scale(0);animation:rp .65s ease-out forwards;pointer-events:none}
+@keyframes rp{to{transform:scale(1);opacity:0}}
+.in{transition:border-color .2s,box-shadow .2s}.in:focus{box-shadow:0 0 0 4px rgba(26,95,122,.18)}
+.chip.on{animation:chp .35s cubic-bezier(.2,1.6,.4,1)}@keyframes chp{from{transform:scale(.82)}}
+.nav button.on::after{animation:ind .35s ease both}@keyframes ind{from{width:0}}
+.nav button.on svg{animation:ipop .45s cubic-bezier(.2,1.7,.4,1)}@keyframes ipop{from{transform:scale(.55)}}
+.ov.out{animation:fadeo .22s both}.ov.out .sh{animation:down .22s ease-in both}
+@keyframes fadeo{to{opacity:0}}@keyframes down{to{transform:translateY(46px);opacity:0}}
+.ov.on .sh>*{animation:rise .38s cubic-bezier(.2,.7,.2,1) both}
+.ov.on .sh>*:nth-child(2){animation-delay:.04s}.ov.on .sh>*:nth-child(3){animation-delay:.08s}.ov.on .sh>*:nth-child(4){animation-delay:.12s}.ov.on .sh>*:nth-child(5){animation-delay:.16s}.ov.on .sh>*:nth-child(6){animation-delay:.2s}.ov.on .sh>*:nth-child(n+7){animation-delay:.24s}
+.anim .row,.anim .tb tbody tr{animation:rise .4s cubic-bezier(.2,.7,.2,1) both}
+.anim .row:nth-child(2),.anim tbody tr:nth-child(1){animation-delay:.05s}.anim .row:nth-child(3),.anim tbody tr:nth-child(2){animation-delay:.1s}.anim .row:nth-child(4),.anim tbody tr:nth-child(3){animation-delay:.15s}.anim .row:nth-child(5),.anim tbody tr:nth-child(4){animation-delay:.2s}.anim .row:nth-child(6),.anim tbody tr:nth-child(5){animation-delay:.25s}.anim .row:nth-child(n+7),.anim tbody tr:nth-child(n+6){animation-delay:.3s}
+.anim .st,.anim .tk,.anim .act{animation:pop2 .55s cubic-bezier(.2,1.2,.4,1) both}@keyframes pop2{from{opacity:0;transform:scale(.9) translateY(10px)}}
+.anim .st:nth-child(2),.anim .tk:nth-child(2),.anim .act:nth-child(2){animation-delay:.08s}.anim .st:nth-child(3),.anim .tk:nth-child(3),.anim .act:nth-child(3){animation-delay:.16s}.anim .tk:nth-child(4),.anim .act:nth-child(4){animation-delay:.24s}
+.gone{animation:gone .32s ease-in forwards!important;overflow:hidden}@keyframes gone{to{opacity:0;transform:translateX(-36px)}}
+.okf{animation:okf .4s ease!important}@keyframes okf{50%{background:rgba(29,122,87,.28)}}
+#toast{overflow:hidden}#toast.show::after{content:"";position:absolute;left:0;bottom:0;height:3px;background:#5fc0e6;animation:tbar 2.6s linear forwards}@keyframes tbar{from{width:100%}to{width:0}}
+#toast.show.err{background:#8f2433;animation:shake .45s}@keyframes shake{20%,60%{transform:translate(calc(-50% - 7px),0)}40%,80%{transform:translate(calc(-50% + 7px),0)}}
+#okc{position:fixed;left:50%;top:50%;width:104px;height:104px;margin:-52px 0 0 -52px;background:rgba(14,42,59,.94);border-radius:26px;display:grid;place-items:center;opacity:0;pointer-events:none;z-index:150}
+#okc svg{width:60px;height:60px;fill:none;stroke:#5fe3a8;stroke-width:3.5;stroke-linecap:round;stroke-linejoin:round}
+#okc circle,#okc path{stroke-dasharray:160;stroke-dashoffset:160}
+#okc.go{animation:okp 1.05s ease both}#okc.go circle{animation:dr .5s .1s ease forwards}#okc.go path{animation:dr .4s .45s ease forwards}
+@keyframes dr{to{stroke-dashoffset:0}}@keyframes okp{0%{opacity:0;transform:scale(.6)}15%{opacity:1;transform:scale(1)}75%{opacity:1}100%{opacity:0;transform:scale(1.06)}}
+
+.rcv{background:#e3e9ed;padding:14px 8px;border-radius:12px;display:flex;justify-content:center;overflow:auto;margin:6px 0 4px}
+.rcpt{width:302px;flex:none;background:#fff;color:#000;font:600 13px/1.55 Cairo,Tahoma,sans-serif;padding:14px 12px 16px;direction:rtl;box-shadow:0 6px 20px rgba(0,0,0,.18);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.rcpt *{color:#000;animation:none!important}
+.rc-h{text-align:center}.rc-lg{width:48px;height:48px;border-radius:50%;background:#000;display:grid;place-items:center;font-size:27px;font-weight:800;margin:0 auto 4px}.rcpt .rc-lg{color:#fff}
+.rc-n{font-size:21px;font-weight:800;line-height:1.3}.rc-s{font-size:11px;font-weight:500}
+.rc-dash{border-top:2px dashed #000;margin:9px 0}
+.rc-t{border:2px solid #000;border-radius:9px;text-align:center;font-size:18px;font-weight:800;padding:2px 0;margin:9px 0 7px}
+.rc-m{display:flex;justify-content:space-between;gap:8px;font-size:13px}.rc-m span{font-weight:500}
+.rc-tb{width:100%;border-collapse:collapse;font-size:13px}.rc-tb th{text-align:start;font-weight:700;border-bottom:2px solid #000;padding:2px 0}.rc-tb td{padding:4px 0;border-bottom:1px dotted #000;vertical-align:top}.rc-tb th:not(:first-child),.rc-tb td:not(:first-child){text-align:left;white-space:nowrap}
+.rc-sum{margin-top:6px}.rc-sum div{display:flex;justify-content:space-between;padding:1px 0}
+.rc-s2{font-weight:800;margin:8px 0 2px;font-size:12px}
+.rc-big{background:#000;border-radius:9px;padding:6px 10px;display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:800;margin-top:8px}.rcpt .rc-big *{color:#fff}
+.rc-stamp{transform:rotate(-5deg);border:3px double #000;border-radius:9px;text-align:center;font-size:21px;font-weight:800;margin:10px 26px 2px;padding:1px 0}
+.rc-sig{display:flex;justify-content:space-between;gap:14px;margin-top:26px;font-size:12px}.rc-sig span{border-top:1px solid #000;padding-top:2px;width:46%;text-align:center}
+.rc-bc{text-align:center;margin-top:2px}.rc-bc svg{display:block;margin:0 auto 2px}
+.rc-f{text-align:center;font-size:13px;font-weight:700;margin:8px 0 4px;line-height:1.6}
+.rc-cut{text-align:center;font-size:11px;margin-top:10px;letter-spacing:1px;direction:ltr}
+#rc{display:none}
+@page rcpt{size:80mm 30mm;page-orientation:upright;margin:0}
+@media print{body.pr80>*:not(#rc){display:none!important}body.pr80{padding:0!important;background:#fff}body.pr80 #rc{display:block;page:rcpt;overflow:visible}body.pr80 #rc .rcpt{width:72mm;height:auto;min-height:0;margin:0 auto;overflow:visible;box-shadow:none;padding:0 1mm 8mm;break-inside:auto}body.pr80 #rc .rc-tb tr{break-inside:avoid}}
+
+/* ===== شاشة القفل (إيقاف النظام من سوبابيز) ===== */
+#lock{position:fixed;inset:0;z-index:300;background:#0e2a3b;color:#fff;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px}
+#lock.on{display:flex}
+#lock .mono{width:72px;height:72px;font-size:38px;border-radius:18px;background:#1a7ea3}
+#lock h2{margin:8px 0 0;font-size:24px}
+#lock p{margin:0;color:#a9c2d0;max-width:340px}
+#lock .btn{margin-top:8px;padding:12px 22px;font-size:17px}
+#lock .lk-warn{background:rgba(255,107,125,.12);border:2px solid #ff6b7d;border-radius:14px;padding:14px 16px;max-width:380px;line-height:1.9;font-size:16px}
+#lock .lk-warn b{display:block;color:#ff6b7d;font-size:19px;margin-bottom:4px}
+#lock .lk-wa{background:#1d9e57;font-size:18px;font-weight:800}
+</style>
+</head>
+<body>
+<div class="app"><div class="hd"><div><h1 id="cn">البروف</h1><small id="dt"></small></div><div class="mono">ب</div></div><div id="main"></div></div>
+<div class="nav"><div class="brand"><div class="mono">ب</div><div><b id="cn2">البروف</b><small>مركز تخصص الأسنان</small></div></div><div id="nav"></div></div><div id="splash"><div class="mono">ب</div><b>البروف</b><small>مركز تخصص الأسنان</small><div class="ld"><i></i></div></div>
+<div class="ov" id="ov" onclick="if(event.target===this)closeSheet()"><div class="sh" id="shb"></div></div>
+<div id="okc"><svg viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg></div><div id="toast"></div>
+<div id="rc"></div>
+<div id="lock"></div>
+<script>
+const KEY="alprof_dental_system_v1";
+let db;try{db=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){db={}}
+["patients","operations","payments","expenses","appointments"].forEach(k=>db[k]=db[k]||[]);
+db.settings=db.settings||{center:"البروف"};
+/* ===== Supabase (REST مباشر بدون مكتبات) ===== */
+const SB_URL="https://buitfbvplwtxvygthokz.supabase.co";
+const SB_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJ1aXRmYnZwbHd0eHZ5Z3Rob2t6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTExMzE5NzEsImV4cCI6MjEwNjcwNzk3MX0.OtxyFi3WlkgtZhkqlQdjkhLvUcqkI18gSwTElDAjG3I";
+const COLS=["patients","operations","payments","expenses","appointments"];
+let CLOUD=false,snap={},syncing=false,again=false;
+COLS.forEach(k=>snap[k]=new Map());snap.settings="";
+async function api(path,opt){
+  opt=opt||{};
+  const c=new AbortController(),t=setTimeout(()=>c.abort(),15000);
+  try{
+    const r=await fetch(SB_URL+"/rest/v1/"+path,{method:opt.method||"GET",body:opt.body,signal:c.signal,
+      headers:Object.assign({apikey:SB_KEY,Authorization:"Bearer "+SB_KEY,"Content-Type":"application/json"},opt.headers||{})});
+    if(!r.ok)throw new Error(r.status+" "+(await r.text()));
+    const tx=await r.text();
+    return tx?JSON.parse(tx):null;
+  }finally{clearTimeout(t)}
+}
+const chunk=(a,n)=>{const r=[];for(let i=0;i<a.length;i+=n)r.push(a.slice(i,i+n));return r};
+async function sync(){
+  if(!CLOUD)return;
+  if(syncing){again=true;return}
+  syncing=true;
+  try{
+    for(const k of COLS){
+      const cur=new Map(db[k].map(x=>[x.id,JSON.stringify(x)]));
+      const up=[...cur].filter(([id,s])=>snap[k].get(id)!==s).map(([id,s])=>({id,data:JSON.parse(s)}));
+      const del=[...snap[k].keys()].filter(id=>!cur.has(id));
+      for(const part of chunk(up,300))await api(k+"?on_conflict=id",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify(part)});
+      for(const part of chunk(del,50))await api(k+"?id=in.("+part.map(i=>encodeURIComponent('"'+i+'"')).join(",")+")",{method:"DELETE",headers:{Prefer:"return=minimal"}});
+      snap[k]=cur;
+    }
+    const s=JSON.stringify(db.settings||{});
+    if(s!==snap.settings){await api("settings?on_conflict=id",{method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},body:JSON.stringify([{id:"main",data:db.settings}])});snap.settings=s}
+  }catch(e){console.error(e);toast("تعذر الحفظ في السحابة، سنعيد المحاولة");checkStatus()}
+  syncing=false;
+  if(again){again=false;sync()}
+}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}sync()};
+async function loadCloud(){
+  const cloud={};let any=false;
+  for(const k of COLS){
+    let rows=[],from=0;
+    for(;;){
+      const d=await api(k+"?select=id,data&order=id&limit=1000&offset="+from)||[];
+      rows=rows.concat(d);if(d.length<1000)break;from+=1000;
+    }
+    cloud[k]=rows.map(r=>r.data);if(rows.length)any=true;
+  }
+  const st=await api("settings?select=data&id=eq.main")||[];
+  if(any||st.length){
+    COLS.forEach(k=>db[k]=cloud[k]);
+    db.settings=st.length?st[0].data:(db.settings||{center:"البروف"});
+    try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}
+    COLS.forEach(k=>snap[k]=new Map(db[k].map(x=>[x.id,JSON.stringify(x)])));
+    snap.settings=JSON.stringify(db.settings);
+    CLOUD=true;
+  }else{
+    // السحابة فارغة: ارفع البيانات المحلية الموجودة (ترحيل أول مرة)
+    COLS.forEach(k=>snap[k]=new Map());snap.settings="";
+    CLOUD=true;
+    await sync();
+  }
+}
+function retryCloud(){loadCloud().then(()=>{render();toast("تم الاتصال بقاعدة البيانات ✔")}).catch(()=>setTimeout(retryCloud,20000))}
+
+/* ===== مفتاح التشغيل/الإيقاف (جدول app_status في سوبابيز) ===== */
+const ST_KEY="alprof_status",DEV_PHONE="0914040157"; /* واتساب التواصل */
+let LOCKED=false;
+function showLock(msg){
+  const l=document.getElementById("lock"),c=(db.settings&&db.settings.center)||"البروف";
+  l.innerHTML=`<div class="mono">ب</div><h2>⚠ النظام متوقف</h2>
+  <div class="lk-warn"><b>تنبيه هام جداً</b><br>انتهت مدة الاشتراك (شهرين) وتم إيقاف النظام. لن تتمكن من تسجيل المرضى أو العلاجات أو الدفعات أو الاطلاع على الحسابات إلا بعد سداد رسوم التجديد.</div>
+  ${msg?`<p>${E(msg)}</p>`:""}
+  <p>بياناتك محفوظة بالكامل ولن تُفقد، وسيعود النظام للعمل تلقائياً خلال ثوانٍ من تأكيد السداد.</p>
+  <a class="btn lk-wa" target="_blank" rel="noopener" href="${wa(DEV_PHONE,"السلام عليكم، أريد تجديد اشتراك نظام "+c+" وسداد الرسوم")}">تواصل واتساب: 0914040157</a>
+  <button class="btn o" onclick="checkStatus()">تحقق مرة أخرى</button>`;
+  l.classList.add("on");
+}
+let CHK=false;
+async function checkStatus(){
+  if(CHK)return !LOCKED;
+  CHK=true;
+  try{return await checkStatus_()}finally{CHK=false}
+}
+async function checkStatus_(){
+  let st,msg="";
+  try{
+    const r=await api("app_status?select=status,message&id=eq.main");
+    st=r&&r[0]?r[0].status:"active";msg=r&&r[0]?r[0].message:"";
+    try{localStorage.setItem(ST_KEY,JSON.stringify({st,msg}))}catch(e){}
+  }catch(e){
+    /* بدون إنترنت أو الجدول غير موجود: نستخدم آخر حالة معروفة */
+    try{const c=JSON.parse(localStorage.getItem(ST_KEY)||"null");if(c){st=c.st;msg=c.msg}}catch(_){}
+    if(!st)return true;
+  }
+  if(st==="suspended"){LOCKED=true;CLOUD=false;showLock(msg);return false}
+  if(LOCKED){ /* رجع النظام للعمل */
+    LOCKED=false;document.getElementById("lock").classList.remove("on");
+    loadCloud().then(()=>{render();toast("تم تفعيل النظام ✔")}).catch(()=>retryCloud());
+  }
+  return true;
+}
+setInterval(checkStatus,5000);
+document.addEventListener("visibilitychange",()=>{if(!document.hidden)checkStatus()});
+
+async function boot(){
+  render();
+  if(!(await checkStatus()))return;
+  try{await loadCloud();render()}
+  catch(e){console.error(e);toast("تعذر الاتصال بقاعدة البيانات، يعمل التطبيق بالنسخة المحلية");setTimeout(retryCloud,20000)}
+}
+const $=id=>document.getElementById(id);
+const E=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const M=n=>Number(n||0).toLocaleString("en-US")+" ج";
+const td=()=>{const d=new Date();return new Date(d-d.getTimezoneOffset()*60000).toISOString().slice(0,10)};
+const FD=d=>d?new Date(d+"T00:00:00").toLocaleDateString("ar-SD",{day:"numeric",month:"short"}):"-";
+const uid=p=>p+"_"+Date.now()+"_"+Math.random().toString(36).slice(2,6);
+const P=id=>db.patients.find(p=>p.id===id);
+const rem=o=>Math.max((o.finalPrice||0)-(o.paid||0),0);
+const debt=pid=>db.operations.filter(o=>o.patientId===pid).reduce((a,o)=>a+rem(o),0);
+const sum=(a,f)=>a.reduce((s,x)=>s+(Number(f(x))||0),0);
+const wa=(ph,t)=>{let n=String(ph||"").replace(/\D/g,"");if(n.startsWith("0"))n="249"+n.slice(1);return"https://wa.me/"+n+"?text="+encodeURIComponent(t)};
+const S={tab:"home",pid:null,per:"month"};let ANIM=true;
+const TREATS=["كشف","حشو","خلع","تنظيف","علاج عصب","تركيب","تقويم","تبييض"];
+const EX=["مواد أسنان","رواتب","إيجار","كهرباء","ماء","صيانة","نظافة","مواصلات","أخرى"];
+let exT=EX[0],after=null,okFn=null;
+
+function toast(m){const t=$("toast"),ok=/^تم|✔/.test(m);t.textContent=m;t.classList.remove("show","err");void t.offsetWidth;t.classList.add("show");if(!ok)t.classList.add("err");if(m.includes("✔")){const o=$("okc");o.classList.remove("go");void o.offsetWidth;o.classList.add("go")}clearTimeout(window._t);window._t=setTimeout(()=>t.classList.remove("show","err"),2600)}
+function sheet(t,h){$("shb").innerHTML=`<div class="sht"><span>${t}</span><button class="x" onclick="closeSheet()">✕</button></div>${h}`;clearTimeout(window._ct);$("ov").classList.remove("out");$("ov").classList.add("on")}
+function closeSheet(){const o=$("ov");if(!o.classList.contains("on"))return;o.classList.add("out");clearTimeout(window._ct);window._ct=setTimeout(()=>o.classList.remove("on","out"),220)}
+function fxOut(el,cb){if(el&&el.isConnected){el.classList.add("gone");setTimeout(cb,320)}else cb()}
+function ask(msg,fn){okFn=fn;sheet("تأكيد",`<p>${msg}</p><div class="two"><button class="big rd" onclick="closeSheet();okFn()">نعم</button><button class="big b" onclick="closeSheet()">لا</button></div>`)}
+function tab(t){ANIM=true;S.tab=t;S.pid=null;render()}
+function openP(id){ANIM=true;S.tab="patients";S.pid=id;render();scrollTo(0,0)}
+
+function render(){
+  try{
+  $("cn").textContent=$("cn2").textContent=db.settings.center||"البروف";
+  $("dt").textContent=new Date().toLocaleDateString("ar-SD",{weekday:"long",day:"numeric",month:"long"});
+  const tabs=[["home",`<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>`,"الرئيسية"],["patients",`<svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-3.6 2.9-6 6.5-6s6.5 2.4 6.5 6"/><path d="M16 5a3.5 3.5 0 010 6.5M18 14c2.2.6 3.5 2.6 3.5 5"/></svg>`,"المرضى"],["appts",`<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>`,"المواعيد"],["acc",`<svg viewBox="0 0 24 24"><path d="M5 20v-6M12 20V5M19 20v-10"/></svg>`,"الحسابات"]];
+  $("nav").innerHTML=tabs.map(([k,i,n])=>`<button class="${S.tab===k?"on":""}" onclick="tab('${k}')">${i}<span>${n}</span></button>`).join("");
+  $("main").className="anim";
+  $("main").innerHTML=S.tab==="home"?vHome():S.tab==="patients"?(S.pid?vFile():vPatients()):S.tab==="appts"?vAppts():vAcc();
+  if(S.tab==="patients"&&!S.pid)listP();
+  ANIM=false;countUp()
+  }catch(e){$("main").innerHTML='<div class="card emp">حدث خطأ في عرض الصفحة</div>'}
+}
+
+/* HOME */
+function vHome(){
+  const t=td(),inc=sum(db.payments.filter(p=>p.date===t),p=>p.amount),ex=sum(db.expenses.filter(e=>e.date===t),e=>e.amount);
+  const ap=db.appointments.filter(a=>a.date===t&&a.status!=="ملغي").sort((a,b)=>a.time.localeCompare(b.time));
+  const deb=db.patients.map(p=>({p,d:debt(p.id)})).filter(x=>x.d>0).sort((a,b)=>b.d-a.d);
+  return `<div class="stats"><div class="st"><small>دخل اليوم</small><b class="g" data-n="${inc}">${M(inc)}</b></div><div class="st"><small>مصروف اليوم</small><b data-n="${ex}">${M(ex)}</b></div><div class="st"><small>ديون المرضى</small><b class="r" data-n="${sum(deb,x=>x.d)}">${M(sum(deb,x=>x.d))}</b></div></div>
+  <div class="acts"><button class="act a1" onclick="newPatient()">مريض جديد</button><button class="act a2" onclick="newTreat()">علاج جديد</button><button class="act a3" onclick="payForm()">استلام فلوس</button><button class="act a4" onclick="newExp()">مصروف</button></div>
+  ${vChart()}
+  <div class="card"><h3>مواعيد اليوم</h3>${ap.length?ap.map(apRow).join(""):'<div class="emp">لا توجد مواعيد اليوم</div>'}</div>
+  <div class="card"><h3>المرضى المطلوبين</h3>${deb.length?deb.slice(0,6).map(x=>`<div class="row clk" onclick="openP('${x.p.id}')"><div><span class="nm">${E(x.p.name)}</span><small>${E(x.p.phone)}</small></div><b class="r">${M(x.d)}</b></div>`).join(""):'<div class="emp">لا توجد ديون</div>'}</div>`;
+}
+function apRow(a){
+  const p=P(a.patientId);if(!p)return"";
+  const st=a.status==="حضر"?'<b class="g">حضر ✔</b>':`<button class="btn g2" onclick="apSt('${a.id}','حضر')">حضر</button> <button class="btn r2" onclick="apSt('${a.id}','ملغي')">إلغاء</button>`;
+  const w=`<a class="btn o" target="_blank" rel="noopener" href="${wa(p.phone,"السلام عليكم "+p.name+"، نذكّركم بموعدكم في "+(db.settings.center||"المركز")+" يوم "+FD(a.date)+" الساعة "+a.time)}">واتساب</a>`;
+  return `<div class="row"><div><span class="nm">${E(p.name)}</span><small>${FD(a.date)} · ${E(a.time)} ${E(a.reason||"")}</small></div><div style="text-align:left">${st} ${a.status==="حضر"?"":w} <button class="btn o" onclick="delAppt('${a.id}')">حذف</button></div></div>`;
+}
+function apSt(id,s){const a=db.appointments.find(x=>x.id===id);if(!a)return;const r=window.LB,c=s==="ملغي";if(r&&r.isConnected)r.classList.add(c?"gone":"okf");setTimeout(()=>{a.status=s;save();render();toast(c?"تم إلغاء الموعد":"تم تسجيل الحضور")},c?320:380)}
+
+/* PATIENTS */
+function vPatients(){
+  return `<div class="top"><input class="in" id="q" placeholder="ابحث بالاسم أو الهاتف" oninput="listP()"><button class="btn" onclick="newPatient()">+ جديد</button></div><div class="card" id="pl"></div>`;
+}
+function listP(){
+  const q=($("q")?.value||"").toLowerCase().trim();
+  const r=db.patients.filter(p=>p.name.toLowerCase().includes(q)||String(p.phone).includes(q));
+  $("pl").innerHTML=r.length?r.map(p=>{const d=debt(p.id);return `<div class="row clk" onclick="openP('${p.id}')"><div class="pw"><i class="av">${E(p.name.trim()[0]||"?")}</i><div><span class="nm">${E(p.name)}</span><small>${E(p.phone)}</small></div></div><div style="text-align:left">${d>0?`<b class="r">${M(d)}</b>`:'<b class="g">مسدد ✔</b>'} <button class="btn o" style="padding:3px 10px;font-size:13px" onclick="event.stopPropagation();delPatient('${p.id}')">حذف</button></div></div>`}).join(""):'<div class="emp">لا يوجد مرضى. اضغط "+ جديد" لتسجيل أول مريض.</div>';
+}
+function vFile(){
+  const p=P(S.pid);if(!p){S.pid=null;return vPatients()}
+  const ops=db.operations.filter(o=>o.patientId===p.id).sort((a,b)=>b.date.localeCompare(a.date));
+  const ids=ops.map(o=>o.id),pays=db.payments.filter(x=>ids.includes(x.operationId)).sort((a,b)=>b.date.localeCompare(a.date));
+  const tot=sum(ops,o=>o.finalPrice),pd=sum(ops,o=>o.paid),d=debt(p.id);
+  const aps=db.appointments.filter(a=>a.patientId===p.id).sort((a,b)=>b.date.localeCompare(a.date));
+  return `<div class="top"><button class="btn o" onclick="tab('patients')">← رجوع</button><h2>${E(p.name)}</h2><button class="btn r2" style="margin-inline-start:auto" onclick="delPatient('${p.id}')">حذف المريض</button></div>
+  <div class="card">${E(p.phone)} ${p.age?"· العمر "+p.age:""}${p.notes?`<br>${E(p.notes)}`:""}
+  <div class="stats" style="margin:12px 0 0"><div class="st"><small>العلاج</small><b>${M(tot)}</b></div><div class="st"><small>دفع</small><b class="g">${M(pd)}</b></div><div class="st"><small>الباقي</small><b class="r">${M(d)}</b></div></div>
+  <div class="two"><button class="big rd" onclick="newTreat('${p.id}')">+ علاج</button><button class="big" onclick="payForm('${p.id}')">استلام فلوس</button></div>
+  <div class="two" style="margin-top:10px"><button class="btn o" style="padding:12px" onclick="newAppt('${p.id}')">حجز موعد</button>${d>0?`<a class="btn o" style="padding:12px;text-align:center" target="_blank" rel="noopener" href="${wa(p.phone,"السلام عليكم "+p.name+"، المتبقي عليكم "+M(d)+" لـ"+(db.settings.center||"المركز")+". شكراً لكم")}">تذكير بالدين</a>`:""}</div><button class="btn o" style="padding:12px;margin-top:10px;width:100%" onclick="rcPat('${p.id}')">كشف حساب للمريض</button></div>
+  <div class="card"><h3>العلاجات</h3>${ops.length?ops.map(o=>`<div class="row"><div><span class="nm">${E(o.name)}</span><small>${FD(o.date)} · ${M(o.finalPrice)}${o.discount?" (خصم "+o.discount+"%)":""}</small></div><div style="text-align:left">${rem(o)>0?`<b class="r">باقي ${M(rem(o))}</b>`:'<b class="g">مسدد ✔</b>'}<br><button class="btn o" style="padding:3px 10px;font-size:13px" onclick="rcOp('${o.id}')">فاتورة</button> <button class="btn o" style="padding:3px 10px;font-size:13px" onclick="delOp('${o.id}')">حذف</button></div></div>`).join(""):'<div class="emp">لا توجد علاجات</div>'}</div>
+  ${pays.length?`<div class="card"><h3>الدفعات</h3>${pays.map(x=>`<div class="row"><div><span class="nm g">${M(x.amount)}</span><small>${FD(x.date)} · ${E(x.method)}</small></div><div><button class="btn o" style="padding:3px 10px;font-size:13px" onclick="rcPay('${x.id}')">إيصال</button> <button class="btn o" style="padding:3px 10px;font-size:13px" onclick="delPay('${x.id}')">حذف</button></div></div>`).join("")}</div>`:""}
+  ${aps.length?`<div class="card"><h3>المواعيد</h3>${aps.map(a=>`<div class="row"><span>${FD(a.date)} ${E(a.time)}</span><small>${E(a.reason||"")} ${E(a.status)}</small><button class="btn o" style="padding:3px 10px;font-size:13px" onclick="delAppt('${a.id}')">حذف</button></div>`).join("")}</div>`:""}`;
+}
+function delOp(id){ask("حذف هذا العلاج مع دفعاته؟",()=>fxOut(window.LB,()=>{db.operations=db.operations.filter(o=>o.id!==id);db.payments=db.payments.filter(x=>x.operationId!==id);save();render();toast("تم الحذف")}))}
+
+function popts(sel,onlyDebt){
+  const l=db.patients.filter(p=>!onlyDebt||debt(p.id)>0);
+  return l.length?l.map(p=>`<option value="${p.id}" ${p.id===sel?"selected":""}>${E(p.name)}${onlyDebt?" — "+M(debt(p.id)):""}</option>`).join(""):`<option value="">لا يوجد مرضى</option>`;
+}
+function newPatient(a){
+  after=a||null;
+  sheet("مريض جديد",`<label class="l">الاسم</label><input class="in" id="fn"><label class="l">رقم الهاتف</label><input class="in" id="fp" type="tel" inputmode="tel" placeholder="09xxxxxxxx"><div class="two"><div><label class="l">العمر</label><input class="in" id="fa" type="number" inputmode="numeric"></div><div><label class="l">ملاحظة طبية</label><input class="in" id="fo" placeholder="حساسية، أمراض..."></div></div><button class="big" onclick="savePatient()">حفظ المريض</button>`);
+}
+function savePatient(){
+  const name=$("fn").value.trim(),phone=$("fp").value.trim();
+  if(!name)return toast("اكتب اسم المريض");
+  if(!phone)return toast("اكتب رقم الهاتف");
+  const p={id:uid("p"),medicalNo:"P-"+String(db.patients.length+1).padStart(5,"0"),name,phone,age:Number($("fa").value||0),gender:"ذكر",blood:"غير معروف",allergy:"",notes:$("fo").value.trim(),createdAt:td()};
+  db.patients.push(p);save();closeSheet();toast("تم تسجيل "+name+" ✔");
+  const a=after;after=null;
+  if(a==="treat")newTreat(p.id);else if(a==="appt")newAppt(p.id);else render();
+}
+
+/* TREATMENT */
+function newTreat(pid){
+  sheet("علاج جديد",`<label class="l">المريض</label><select class="in" id="tp">${popts(pid)}</select>
+  <div class="m" style="font-size:14px;margin-top:4px">مريض جديد؟ <a href="#" style="color:var(--pri)" onclick="closeSheet();newPatient('treat');return false">سجّله هنا</a></div>
+  <label class="l">نوع العلاج</label><input class="in" id="tn" placeholder="اكتب أو اختر">
+  <div class="chips">${TREATS.map(t=>`<button class="chip" onclick="$('tn').value='${t}';document.querySelectorAll('#shb .chip').forEach(c=>c.classList.remove('on'));this.classList.add('on')">${t}</button>`).join("")}</div>
+  <div class="two"><div><label class="l">السعر</label><input class="in" id="tpr" type="number" inputmode="numeric" oninput="calcT()"></div><div><label class="l">خصم %</label><input class="in" id="tdc" type="number" inputmode="numeric" value="0" oninput="calcT()"></div></div>
+  <label class="l">دفع كم الآن؟</label><input class="in" id="tpd" type="number" inputmode="numeric" value="0" oninput="calcT()">
+  <div class="chips"><button class="chip" onclick="$('tpd').value=tn_().final;calcT()">دفع الكل</button><button class="chip" onclick="$('tpd').value=0;calcT()">ما دفع شي</button></div>
+  <label class="l">طريقة الدفع</label><select class="in" id="tm"><option>نقدي</option><option>بنكك</option><option>تحويل بنكي</option><option>بطاقة</option></select>
+  <div class="box" id="tb"></div><button class="big rd" onclick="saveTreat()">حفظ العلاج</button>`);
+  calcT();
+}
+function tn_(){const price=Math.max(+$("tpr").value||0,0),disc=Math.min(Math.max(+$("tdc").value||0,0),100),final=price-price*disc/100,paid=Math.min(Math.max(+$("tpd").value||0,0),final);return{price,disc,final,paid,raw:+$("tpd").value||0}}
+function calcT(){const n=tn_();$("tb").innerHTML=`السعر النهائي: <b>${M(n.final)}</b>${n.disc?" (بعد الخصم)":""}<br>يدفع الآن: <b class="g">${M(n.paid)}</b><br>الباقي: <b class="r">${M(n.final-n.paid)}</b>`}
+function saveTreat(){
+  const pid=$("tp").value,name=$("tn").value.trim(),n=tn_();
+  if(!pid)return toast("اختر المريض أولاً");
+  if(!name)return toast("اكتب نوع العلاج");
+  if(n.price<=0)return toast("اكتب السعر");
+  if(n.raw>n.final)return toast("المدفوع أكبر من السعر");
+  const op={id:uid("op"),patientId:pid,name,price:n.price,discount:n.disc,discountAmount:n.price-n.final,finalPrice:n.final,paid:n.paid,doctor:"",notes:"",date:td(),createdBy:"",installment:n.final>n.paid};
+  db.operations.push(op);
+  if(n.paid>0)db.payments.push({id:uid("pay"),operationId:op.id,amount:n.paid,method:$("tm").value,date:td(),by:"",note:"دفعة أولى"});
+  save();closeSheet();toast("تم حفظ العلاج ✔");render();rcOp(op.id);
+}
+
+/* PAYMENT: يوزع المبلغ على أقدم العلاجات */
+function payForm(pid){
+  if(!db.patients.some(p=>debt(p.id)>0))return toast("لا توجد ديون على أحد");
+  const first=pid&&debt(pid)>0?pid:db.patients.find(p=>debt(p.id)>0).id;
+  sheet("استلام فلوس",`<label class="l">المريض</label><select class="in" id="yp" onchange="payInfo()">${popts(first,true)}</select><div class="box" id="yi"></div>
+  <label class="l">المبلغ المستلم</label><input class="in" id="ya" type="number" inputmode="numeric"><div class="chips"><button class="chip" onclick="$('ya').value=debt($('yp').value)">سدد الكل</button></div>
+  <label class="l">طريقة الدفع</label><select class="in" id="ym"><option>نقدي</option><option>بنكك</option><option>تحويل بنكي</option><option>بطاقة</option></select>
+  <button class="big" onclick="savePay()">تسجيل الدفعة</button>`);
+  payInfo();
+}
+function payInfo(){$("yi").innerHTML=`الباقي على المريض: <b class="r">${M(debt($("yp").value))}</b>`}
+function savePay(){
+  const pid=$("yp").value,a=+$("ya").value||0,d=debt(pid);
+  if(a<=0)return toast("اكتب المبلغ");
+  if(a>d)return toast("المبلغ أكبر من الباقي ("+M(d)+")");
+  let left=a;const bid=uid("b");
+  db.operations.filter(o=>o.patientId===pid&&rem(o)>0).sort((x,y)=>x.date.localeCompare(y.date)).forEach(o=>{
+    if(left<=0)return;const t=Math.min(left,rem(o));o.paid+=t;left-=t;
+    db.payments.push({id:uid("pay"),operationId:o.id,amount:t,method:$("ym").value,date:td(),by:"",note:"",batch:bid});
+  });
+  save();closeSheet();toast("تم استلام "+M(a)+" ✔");render();const y0=db.payments.find(x=>x.batch===bid);if(y0)rcPay(y0.id);
+}
+
+/* EXPENSE */
+function newExp(){
+  exT=EX[0];
+  sheet("مصروف جديد",`<label class="l">النوع</label><div class="chips" id="ec"></div><label class="l">المبلغ</label><input class="in" id="ea" type="number" inputmode="numeric"><label class="l">ملاحظة (اختياري)</label><input class="in" id="en"><button class="big" onclick="saveExp()">حفظ المصروف</button>`);
+  drawEx();
+}
+function drawEx(){$("ec").innerHTML=EX.map(t=>`<button class="chip ${t===exT?"on":""}" onclick="exT='${t}';drawEx()">${t}</button>`).join("")}
+function saveExp(){
+  const a=+$("ea").value||0;if(a<=0)return toast("اكتب المبلغ");
+  db.expenses.push({id:uid("ex"),type:exT,amount:a,description:$("en").value.trim(),date:td(),by:""});
+  save();closeSheet();toast("تم حفظ المصروف ✔");render();
+}
+function delEx(id){ask("حذف هذا المصروف؟",()=>fxOut(window.LB,()=>{db.expenses=db.expenses.filter(e=>e.id!==id);save();render();toast("تم الحذف")}))}
+
+/* APPOINTMENTS */
+function vAppts(){
+  const t=td(),r=db.appointments.filter(a=>a.date>=t&&a.status!=="ملغي").sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));
+  return `<div class="top"><h2>المواعيد القادمة</h2><button class="btn" style="margin-inline-start:auto" onclick="newAppt()">+ حجز</button></div><div class="card">${r.length?r.map(apRow).join(""):'<div class="emp">لا توجد مواعيد قادمة</div>'}</div>`;
+}
+function newAppt(pid){
+  sheet("حجز موعد",`<label class="l">المريض</label><select class="in" id="ap">${popts(pid)}</select>
+  <div class="m" style="font-size:14px;margin-top:4px">مريض جديد؟ <a href="#" style="color:var(--pri)" onclick="closeSheet();newPatient('appt');return false">سجّله هنا</a></div>
+  <div class="two"><div><label class="l">اليوم</label><input class="in" id="ad" type="date" value="${td()}"></div><div><label class="l">الساعة</label><input class="in" id="at" type="time"></div></div>
+  <label class="l">السبب (اختياري)</label><input class="in" id="ar"><button class="big b" onclick="saveAppt()">حجز الموعد</button>`);
+}
+function saveAppt(){
+  const pid=$("ap").value,d=$("ad").value,t=$("at").value;
+  if(!pid)return toast("اختر المريض");
+  if(!d||!t)return toast("اختر اليوم والساعة");
+  db.appointments.push({id:uid("a"),patientId:pid,doctor:"",date:d,time:t,reason:$("ar").value.trim(),status:"مؤكد",createdBy:""});
+  save();closeSheet();toast("تم حجز الموعد ✔");render();
+}
+
+/* ACCOUNTS */
+const PAL=["#2dd4a7","#4cc2ff","#ffc857","#ff7a90","#b18cff","#8d9fb0"];
+let SER=[];
+const fmtK=v=>{const a=Math.abs(v),g=v<0?"-":"";return a>=1e6?g+(a/1e6).toFixed(1)+"M":a>=1e3?g+Math.round(a/1e3)+"K":g+Math.round(a)};
+const iso=x=>new Date(x-x.getTimezoneOffset()*60000).toISOString().slice(0,10);
+const addD=(d0,n)=>{const d=new Date(d0+"T00:00:00");d.setDate(d.getDate()+n);return iso(d)};
+function grp(arr,k,v){const m={};arr.forEach(x=>{const n=k(x)||"غير محدد";m[n]=(m[n]||0)+(Number(v(x))||0)});return Object.entries(m).sort((a,b)=>b[1]-a[1])}
+function setR(k){const t=td(),d=new Date();S.per=k;S.to=t;
+  if(k==="day")S.from=t;
+  else if(k==="w"){d.setDate(d.getDate()-6);S.from=iso(d)}
+  else if(k==="m30"){d.setDate(d.getDate()-29);S.from=iso(d)}
+  else if(k==="month")S.from=t.slice(0,7)+"-01";
+  else if(k==="year")S.from=t.slice(0,4)+"-01-01";
+  else{const ds=[...db.payments,...db.expenses].map(x=>x.date).filter(Boolean).sort();S.from=ds[0]||t}
+  render()}
+function setD(w,v){if(!v)return;S[w]=v;if(S.from>S.to){const t=S.from;S.from=S.to;S.to=t}S.per="custom";render()}
+function chartHover(e){const n=SER.length;if(!n)return;const r=$("ch").getBoundingClientRect(),x=(e.clientX-r.left)/r.width*640,st=n>1?576/(n-1):0;let i=n>1?Math.round((x-52)/st):0;i=Math.max(0,Math.min(n-1,i));const d=SER[i],px=n>1?52+i*st:340,cl=$("cl");cl.setAttribute("x1",px);cl.setAttribute("x2",px);cl.style.opacity=1;const t=$("tp");t.innerHTML=`<b>${d.k}</b><br>دخل: ${M(d.i)}<br>مصروف: ${M(d.e)}<br>الصافي: ${M(d.i-d.e)}<br>التراكمي: ${M(d.c)}`;t.style.opacity=1;t.style.left=Math.min(Math.max(px/640*r.width,70),r.width-70)+"px"}
+function chartOut(){const c=$("cl"),t=$("tp");if(c)c.style.opacity=0;if(t)t.style.opacity=0}
+function mktChart(ser,monthly){
+  SER=ser;const n=ser.length,x0=52,x1=628,st=n>1?(x1-x0)/(n-1):0,X=i=>n>1?x0+i*st:340;
+  const cum=ser.map(d=>d.c),lo=Math.min(0,...cum),h0=Math.max(0,...cum),hi=h0===lo?lo+1:h0,Y=v=>14+(hi-v)/(hi-lo)*156;
+  const col=(cum[n-1]||0)>=0?"#2dd4a7":"#ff5d6c";
+  let grid="";for(let t=0;t<=4;t++){const v=lo+(hi-lo)*t/4,y=Y(v);grid+=`<line x1="${x0}" x2="${x1}" y1="${y}" y2="${y}" stroke="rgba(255,255,255,.07)"/><text x="${x0-6}" y="${y+4}" text-anchor="end" font-size="10" fill="#7f97a8">${fmtK(v)}</text>`}
+  const line="M"+ser.map((d,i)=>X(i)+","+Y(d.c)).join(" L"),z=Y(0),area=line+` L${X(n-1)},${z} L${X(0)},${z} Z`;
+  const vm=Math.max(1,...ser.map(d=>Math.max(d.i,d.e))),bw=Math.max(2,Math.min(16,(n>1?st:60)*.38));
+  const bars=ser.map((d,i)=>{const h1=d.i/vm*54,h2=d.e/vm*54,x=X(i);return `<rect class="bar" x="${x-bw}" y="${250-h1}" width="${bw}" height="${h1}" fill="#2dd4a7" opacity=".85"/><rect class="bar" x="${x}" y="${250-h2}" width="${bw}" height="${h2}" fill="#ff5d6c" opacity=".85"/>`}).join("");
+  const ev=Math.max(1,Math.ceil(n/6)),xl=ser.map((d,i)=>i%ev===0?`<text x="${X(i)}" y="268" text-anchor="middle" font-size="10" fill="#7f97a8">${monthly?d.k:d.k.slice(5)}</text>`:"").join("");
+  const lx=X(n-1),ly=Y(cum[n-1]||0);
+  return `<div class="chw" style="direction:ltr"><svg id="ch" viewBox="0 0 640 276" width="100%" onpointermove="chartHover(event)" onpointerleave="chartOut()" style="touch-action:pan-y;display:block"><defs><linearGradient id="gA" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${col}" stop-opacity=".45"/><stop offset="1" stop-color="${col}" stop-opacity="0"/></linearGradient></defs>${grid}<line x1="${x0}" x2="${x1}" y1="${z}" y2="${z}" stroke="#7f97a8" stroke-dasharray="4 4" opacity=".6"/><path d="${area}" fill="url(#gA)"/><path class="pth" pathLength="1" d="${line}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>${bars}${xl}<circle cx="${lx}" cy="${ly}" r="4.5" fill="${col}"/><circle class="pls" cx="${lx}" cy="${ly}" r="4.5" fill="none" stroke="${col}"/><line id="cl" x1="0" x2="0" y1="14" y2="250" stroke="#9bb2c2" stroke-dasharray="3 3" style="opacity:0"/></svg><div class="tip" id="tp"></div></div>`;
+}
+function donut(list,tot){
+  if(!list.length||!tot)return '<div class="emp">لا توجد بيانات</div>';
+  const L=list.slice(0,5),rest=sum(list.slice(5),x=>x[1]);if(rest>0)L.push(["أخرى",rest]);
+  const C=2*Math.PI*40;let off=0;
+  const seg=L.map(([k,v],i)=>{const len=v/tot*C,c=`<circle cx="60" cy="60" r="40" fill="none" stroke="${PAL[i]}" stroke-width="18" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}"/>`;off+=len;return c}).join("");
+  return `<div class="dnw"><svg viewBox="0 0 120 120" width="140" height="140"><g class="dg"><g transform="rotate(-90 60 60)">${seg}</g></g><text x="60" y="57" text-anchor="middle" font-size="8" fill="#7f97a8">الإجمالي</text><text x="60" y="71" text-anchor="middle" font-size="12" font-weight="700" fill="#e4eef5">${fmtK(tot)}</text></svg><div class="lgd">${L.map(([k,v],i)=>`<div><i style="background:${PAL[i]}"></i><span>${E(k)}</span><b>${Math.round(v/tot*100)}%</b></div>`).join("")}</div></div>`;
+}
+function vAcc(){
+  if(!S.from)setR("month");
+  const a=S.from,b=S.to,inR=d=>d>=a&&d<=b;
+  const pays=db.payments.filter(p=>inR(p.date)),exs=db.expenses.filter(e=>inR(e.date));
+  const inc=sum(pays,p=>p.amount),ex=sum(exs,e=>e.amount),net=inc-ex,margin=inc>0?Math.round(net/inc*100):0;
+  const len=Math.round((new Date(b)-new Date(a))/864e5)+1,pb=addD(a,-1),pa=addD(a,-len),inP=d=>d>=pa&&d<=pb;
+  const pi=sum(db.payments.filter(p=>inP(p.date)),p=>p.amount),pe=sum(db.expenses.filter(e=>inP(e.date)),e=>e.amount);
+  const pct=(c,p)=>p?((c-p)/Math.abs(p)*100):null;
+  const tk=(lab,v,p,good,sub)=>{const up=p!=null&&p>=0,cl=p==null?"":(up===good?"up":"dw");return `<div class="tk"><small>${lab}</small><b data-n="${v}">${M(v)}</b><span class="${cl}">${p==null?(sub||"—"):(up?"▲ ":"▼ ")+Math.abs(p).toFixed(1)+"%"}</span></div>`};
+  const monthly=len>62,kf=d=>monthly?d.slice(0,7):d,keys=[];
+  if(!monthly){for(let d=a;d<=b;d=addD(d,1))keys.push(d)}
+  else{let d=a.slice(0,7)+"-01";while(d.slice(0,7)<=b.slice(0,7)){keys.push(d.slice(0,7));d=addD(d,32).slice(0,7)+"-01"}}
+  const mp={};keys.forEach(k=>mp[k]={k,i:0,e:0});
+  pays.forEach(p=>{const m=mp[kf(p.date)];if(m)m.i+=p.amount});exs.forEach(e=>{const m=mp[kf(e.date)];if(m)m.e+=e.amount});
+  let c=0;const ser=keys.map(k=>{const m=mp[k];c+=m.i-m.e;m.c=c;return m});
+  const opn=p=>{const o=db.operations.find(x=>x.id===p.operationId);return o?o.name:""};
+  const led=[...pays.map(p=>{const o=db.operations.find(x=>x.id===p.operationId),pt=o&&P(o.patientId);return{d:p.date,n:(pt?pt.name:"-")+" — "+(o?o.name:""),s:p.method,i:p.amount,e:0,pid:p.id}}),...exs.map(e=>({d:e.date,n:e.type+(e.description?" — "+e.description:""),s:"مصروف",i:0,e:e.amount,id:e.id}))].sort((x,y)=>y.d.localeCompare(x.d)).slice(0,60);
+  const rowsS=ser.filter(m=>m.i||m.e).reverse().slice(0,62);
+  const ch=(k,n)=>`<button class="chip ${S.per===k?"on":""}" onclick="setR('${k}')">${n}</button>`;
+  const cls=v=>v>=0?"up":"dw";
+  return `<div class="pr"><h2>${E(db.settings.center||"البروف")}</h2><div>تقرير الحسابات — من ${a} إلى ${b}</div></div>
+  <div class="mkt">
+   <div class="mh"><div><b>لوحة الحسابات</b><small>${E(db.settings.center||"البروف")}</small></div><span class="live"><i></i>مباشر ${new Date().toLocaleTimeString("ar-SD",{hour:"2-digit",minute:"2-digit"})}</span></div>
+   <div class="mc noprint"><div class="two"><div><label class="l" style="margin-top:0">من تاريخ</label><input class="in" type="date" value="${a}" onchange="setD('from',this.value)"></div><div><label class="l" style="margin-top:0">إلى تاريخ</label><input class="in" type="date" value="${b}" onchange="setD('to',this.value)"></div></div>
+   <div class="chips">${ch("day","اليوم")}${ch("w","٧ أيام")}${ch("m30","٣٠ يوم")}${ch("month","هذا الشهر")}${ch("year","هذه السنة")}${ch("all","الكل")}</div></div>
+   <div class="tks">${tk("إجمالي الدخل",inc,pct(inc,pi),true)}${tk("إجمالي المصروفات",ex,pct(ex,pe),false)}${tk("صافي الربح",net,pct(net,pi-pe),true,"هامش "+margin+"%")}${tk("ديون مستحقة",sum(db.operations,rem),null,false,"على المرضى")}</div>
+   <div class="mc"><div class="mt2"><b>منحنى صافي الربح التراكمي</b><small>${monthly?"شهري":"يومي"} · من ${a} إلى ${b} · مرّر على الرسم</small></div>${mktChart(ser,monthly)}<div class="lgd2"><span><i style="background:#2dd4a7"></i>دخل</span><span><i style="background:#ff5d6c"></i>مصروف</span></div></div>
+   <div class="cols2"><div class="mc"><div class="mt2"><b>الدخل حسب العلاج</b></div>${donut(grp(pays,opn,p=>p.amount),inc)}</div><div class="mc"><div class="mt2"><b>المصروفات حسب النوع</b></div>${donut(grp(exs,e=>e.type,e=>e.amount),ex)}</div><div class="mc"><div class="mt2"><b>الدخل حسب طريقة الدفع</b></div>${donut(grp(pays,p=>p.method,p=>p.amount),inc)}</div></div>
+   <div class="mc"><div class="mt2"><b>جدول الملخص (${monthly?"شهري":"يومي"})</b></div><div class="tw"><table class="tb"><thead><tr><th>${monthly?"الشهر":"التاريخ"}</th><th>الدخل</th><th>المصروف</th><th>الصافي</th><th>التراكمي</th></tr></thead><tbody>${rowsS.length?rowsS.map(m=>`<tr><td>${m.k}</td><td class="up">${M(m.i)}</td><td class="dw">${M(m.e)}</td><td class="${cls(m.i-m.e)}">${M(m.i-m.e)}</td><td class="${cls(m.c)}">${M(m.c)}</td></tr>`).join(""):'<tr><td colspan="5" class="emp">لا توجد حركات في هذه الفترة</td></tr>'}</tbody><tfoot><tr><td>الإجمالي</td><td class="up">${M(inc)}</td><td class="dw">${M(ex)}</td><td class="${cls(net)}">${M(net)}</td><td></td></tr></tfoot></table></div></div>
+   <div class="mc"><div class="mt2"><b>سجل الحركات</b><button class="btn noprint" onclick="newExp()">+ مصروف</button></div><div class="tw"><table class="tb"><thead><tr><th>التاريخ</th><th>البيان</th><th>الطريقة</th><th>دخل</th><th>مصروف</th><th class="noprint"></th></tr></thead><tbody>${led.length?led.map(x=>`<tr><td>${FD(x.d)}</td><td>${E(x.n)}</td><td>${E(x.s)}</td><td class="up">${x.i?M(x.i):""}</td><td class="dw">${x.e?M(x.e):""}</td><td class="noprint"><button class="btn o" style="padding:1px 9px;font-size:12px" onclick="${x.id?`rcEx('${x.id}')`:`rcPay('${x.pid}')`}">طباعة</button> ${x.id?`<button class="btn o" style="padding:1px 9px;font-size:12px" onclick="delEx('${x.id}')">حذف</button>`:`<button class="btn o" style="padding:1px 9px;font-size:12px" onclick="delPay('${x.pid}')">حذف</button>`}</td></tr>`).join(""):'<tr><td colspan="6" class="emp">لا توجد حركات</td></tr>'}</tbody></table></div></div>
+  </div>
+  <div class="card noprint" style="margin-top:12px"><h3>الإعدادات</h3><label class="l">اسم المركز</label><input class="in" id="cs" value="${E(db.settings.center||"")}"><label class="l">هاتف المركز (يظهر في الفاتورة)</label><input class="in" id="cp" type="tel" value="${E(db.settings.phone||"")}"><label class="l">العنوان (يظهر في الفاتورة)</label><input class="in" id="ca" value="${E(db.settings.address||"")}"><button class="big b" onclick="db.settings.center=$('cs').value.trim()||'البروف';db.settings.phone=$('cp').value.trim();db.settings.address=$('ca').value.trim();save();render();toast('تم الحفظ ✔')">حفظ البيانات</button>
+  <div class="two" style="margin-top:4px"><button class="big b" onclick="backup()">نسخة احتياطية</button><button class="big b" onclick="window.print()">طباعة التقرير</button></div><button class="big rd" onclick="resetAll()">مسح كل البيانات</button></div>`;
+}
+function delPatient(id){const p=P(id);if(!p)return;ask("حذف المريض «"+E(p.name)+"» مع كل علاجاته ودفعاته ومواعيده؟ لا يمكن التراجع.",()=>fxOut(window.LB,()=>{const ops=db.operations.filter(o=>o.patientId===id).map(o=>o.id);db.operations=db.operations.filter(o=>o.patientId!==id);db.payments=db.payments.filter(x=>!ops.includes(x.operationId));db.appointments=db.appointments.filter(a=>a.patientId!==id);db.patients=db.patients.filter(x=>x.id!==id);S.pid=null;save();render();toast("تم حذف المريض")}))}
+function delPay(id){const y=db.payments.find(x=>x.id===id);if(!y)return;ask("حذف هذه الدفعة ("+M(y.amount)+")؟ سيعود المبلغ ديناً على المريض.",()=>fxOut(window.LB,()=>{const o=db.operations.find(x=>x.id===y.operationId);if(o)o.paid=Math.max(0,(o.paid||0)-y.amount);db.payments=db.payments.filter(x=>x.id!==id);save();render();toast("تم حذف الدفعة")}))}
+function delAppt(id){ask("حذف هذا الموعد نهائياً؟",()=>fxOut(window.LB,()=>{db.appointments=db.appointments.filter(a=>a.id!==id);save();render();toast("تم حذف الموعد")}))}
+function resetAll(){ask("سيتم مسح كل البيانات نهائياً. متأكد؟",()=>setTimeout(()=>ask("تأكيد أخير: مسح كل شيء؟",()=>{db={patients:[],operations:[],payments:[],expenses:[],appointments:[],settings:db.settings};save();S.pid=null;render();toast("تم مسح كل البيانات")}),300))}
+let RC="";
+const RN=(pre,id)=>{const t=String(id||"").split("_")[1];return pre+"-"+(/^\d+$/.test(t||"")?t.slice(-6):String(id||"").slice(-6))};
+const FDL=d=>d?new Date(d+"T00:00:00").toLocaleDateString("ar-SD",{year:"numeric",month:"2-digit",day:"2-digit"}):"-";
+function bars(txt){let x=0,r="";for(const ch of txt){const c=ch.charCodeAt(0);for(let b=7;b>=0;b--){const w=(b%3)+1;if((c>>b)&1)r+=`<rect x="${x}" y="0" width="${w}" height="34"/>`;x+=w+1}x+=2}return `<svg viewBox="0 0 ${x} 34" width="170" height="34" preserveAspectRatio="none" fill="#000">${r}</svg>`}
+function docSheet(title,html){RC=html;sheet(title,`<div class="rcv"><div class="rcpt">${html}</div></div><div class="two"><button class="big b" onclick="doPrint()">طباعة</button><button class="big" style="background:var(--soft);color:var(--tx)" onclick="closeSheet()">إغلاق</button></div><p class="m" style="font-size:12px;text-align:center;margin:8px 0 0">مقاس الورق 80 مم — اختره من نافذة الطباعة</p>`)}
+function doPrint(){
+  const css=document.querySelector("style").textContent;
+  const old=document.getElementById("pfr");if(old)old.remove();
+  const f=document.createElement("iframe");f.id="pfr";
+  f.style.cssText="position:fixed;left:-10000px;top:0;width:320px;height:200px;border:0";
+  document.body.appendChild(f);
+  const d=f.contentDocument;
+  d.open();
+  d.write('<!doctype html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap"><style>'+css+'</style><style id="pg">@page{size:80mm 200mm;margin:0}html,body{margin:0!important;padding:0!important;background:#fff!important}.rcpt{width:72mm!important;margin:0 auto!important;box-shadow:none!important;padding:0 1mm 3mm!important}</style></head><body><div class="rcpt">'+RC+'</div></body></html>');
+  d.close();
+  const go=()=>{
+    const r=d.querySelector(".rcpt"),h=Math.ceil(r.offsetHeight*25.4/96)+4;
+    d.getElementById("pg").textContent="@page{size:80mm "+h+"mm;margin:0}html,body{margin:0!important;padding:0!important;background:#fff!important}.rcpt{width:72mm!important;margin:0 auto!important;box-shadow:none!important;padding:0 1mm 3mm!important}";
+    setTimeout(()=>{try{f.contentWindow.focus();f.contentWindow.print()}catch(e){toast("الطباعة غير متاحة هنا")}},150);
+    setTimeout(()=>f.remove(),60000);
+  };
+  const ready=d.fonts&&d.fonts.ready?d.fonts.ready:Promise.resolve();
+  Promise.race([ready,new Promise(r=>setTimeout(r,1500))]).then(go);
+}
+function rcWrap(title,no,d,pt,body){const C=db.settings;
+  return `<div class="rc-h"><div class="rc-lg">ب</div><div class="rc-n">${E(C.center||"البروف")}</div><div class="rc-s">مركز تخصص الأسنان</div>${C.phone?`<div class="rc-s">هاتف: ${E(C.phone)}</div>`:""}${C.address?`<div class="rc-s">${E(C.address)}</div>`:""}</div>
+  <div class="rc-t">${title}</div>
+  <div class="rc-m"><span>الرقم</span><b>${no}</b></div><div class="rc-m"><span>التاريخ</span><b>${FDL(d)}</b></div>${pt?`<div class="rc-m"><span>المريض</span><b>${E(pt.name)}</b></div>${pt.phone?`<div class="rc-m"><span>الهاتف</span><b>${E(pt.phone)}</b></div>`:""}`:""}
+  <div class="rc-dash"></div>${body}<div class="rc-dash"></div>
+  <div class="rc-bc">${bars(no)}<div class="rc-s">${no}</div></div>
+  <div class="rc-f">شكراً لثقتكم بنا<br>نتمنى لكم دوام الصحة والعافية</div><div class="rc-s" style="text-align:center">طُبع بتاريخ ${new Date().toLocaleString("ar-SD")}</div><div class="rc-cut">✂ ┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈┈</div>`}
+function rcOp(id){const o=db.operations.find(x=>x.id===id);if(!o)return;const pt=P(o.patientId),ps=db.payments.filter(x=>x.operationId===id);
+  const body=`<table class="rc-tb"><thead><tr><th>البيان</th><th>المبلغ</th></tr></thead><tbody><tr><td>${E(o.name)}</td><td>${M(o.price)}</td></tr></tbody></table>
+  <div class="rc-sum">${o.discount?`<div><span>خصم ${o.discount}%</span><b>− ${M(o.price-o.finalPrice)}</b></div>`:""}<div><span>الإجمالي</span><b>${M(o.finalPrice)}</b></div><div><span>المدفوع</span><b>${M(o.paid)}</b></div></div>
+  ${ps.length?`<div class="rc-s2">الدفعات</div>${ps.map(y=>`<div class="rc-m"><span>${FDL(y.date)} · ${E(y.method)}</span><b>${M(y.amount)}</b></div>`).join("")}`:""}
+  <div class="rc-big"><span>المتبقي</span><b>${M(rem(o))}</b></div>${rem(o)<=0?'<div class="rc-stamp">مسدد بالكامل</div>':""}`;
+  docSheet("فاتورة علاج",rcWrap("فاتورة علاج",RN("INV",o.id),o.date,pt,body))}
+function rcPay(id){const y=db.payments.find(x=>x.id===id);if(!y)return;const g=y.batch?db.payments.filter(x=>x.batch===y.batch):[y],ops=g.map(x=>db.operations.find(o=>o.id===x.operationId)),pt=ops[0]&&P(ops[0].patientId);
+  const body=`<table class="rc-tb"><thead><tr><th>العلاج</th><th>المبلغ</th></tr></thead><tbody>${g.map((x,i)=>`<tr><td>${E(ops[i]?ops[i].name:"-")}</td><td>${M(x.amount)}</td></tr>`).join("")}</tbody></table>
+  <div class="rc-m"><span>طريقة الدفع</span><b>${E(y.method)}</b></div><div class="rc-big"><span>المبلغ المستلم</span><b>${M(sum(g,x=>x.amount))}</b></div>
+  <div class="rc-sum"><div><span>الباقي على المريض</span><b>${M(pt?debt(pt.id):0)}</b></div></div>`;
+  docSheet("إيصال استلام",rcWrap("إيصال استلام",RN("RC",y.batch||y.id),y.date,pt,body))}
+function rcEx(id){const e=db.expenses.find(x=>x.id===id);if(!e)return;
+  const body=`<div class="rc-m"><span>نوع المصروف</span><b>${E(e.type)}</b></div>${e.description?`<div class="rc-m"><span>البيان</span><b>${E(e.description)}</b></div>`:""}<div class="rc-big"><span>المبلغ المصروف</span><b>${M(e.amount)}</b></div><div class="rc-sig"><span>المستلم</span><span>المحاسب</span></div>`;
+  docSheet("سند صرف",rcWrap("سند صرف",RN("EX",e.id),e.date,null,body))}
+function rcPat(id){const p=P(id);if(!p)return;const ops=db.operations.filter(o=>o.patientId===id).sort((a,b)=>a.date.localeCompare(b.date));
+  const body=`<table class="rc-tb"><thead><tr><th>العلاج</th><th>الإجمالي</th><th>المدفوع</th></tr></thead><tbody>${ops.map(o=>`<tr><td>${E(o.name)}<div class="rc-s">${FDL(o.date)}</div></td><td>${M(o.finalPrice)}</td><td>${M(o.paid)}</td></tr>`).join("")||'<tr><td colspan="3">لا توجد علاجات</td></tr>'}</tbody></table>
+  <div class="rc-sum"><div><span>إجمالي العلاجات</span><b>${M(sum(ops,o=>o.finalPrice))}</b></div><div><span>إجمالي المدفوع</span><b>${M(sum(ops,o=>o.paid))}</b></div></div><div class="rc-big"><span>المتبقي</span><b>${M(debt(id))}</b></div>`;
+  docSheet("كشف حساب",rcWrap("كشف حساب",RN("ST",p.id),td(),p,body))}
+function backup(){
+  sheet("نسخة احتياطية / استعادة",`<p class="m" style="font-size:15px">انسخ هذا النص واحفظه في واتساب أو ملاحظات. للاستعادة (أو نقل بياناتك القديمة) الصق النص هنا واضغط استعادة.</p><textarea class="in" id="bk">${E(JSON.stringify(db))}</textarea><div class="two"><button class="big b" onclick="$('bk').select();document.execCommand('copy');toast('تم النسخ ✔')">نسخ</button><button class="big rd" onclick="restore()">استعادة</button></div>`);
+}
+function restore(){
+  try{const d=JSON.parse($("bk").value);if(!Array.isArray(d.patients))throw 0;
+    ask("سيتم استبدال البيانات الحالية بهذه النسخة. متأكد؟",()=>{db=d;["patients","operations","payments","expenses","appointments"].forEach(k=>db[k]=db[k]||[]);db.settings=db.settings||{center:"البروف"};save();render();toast("تمت الاستعادة ✔")});
+  }catch(e){toast("النص غير صالح")}
+}
+function countUp(){if(matchMedia("(prefers-reduced-motion:reduce)").matches)return;document.querySelectorAll("[data-n]").forEach(el=>{const t=+el.dataset.n;if(!t)return;const s=performance.now();(function f(n){const k=Math.min((n-s)/800,1),e=1-Math.pow(1-k,3);el.textContent=M(Math.round(t*e));if(k<1)requestAnimationFrame(f)})(s)})}
+function vChart(){
+  const days=[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return new Date(d-d.getTimezoneOffset()*60000).toISOString().slice(0,10)});
+  const inc=days.map(d=>sum(db.payments.filter(p=>p.date===d),p=>p.amount)),ex=days.map(d=>sum(db.expenses.filter(e=>e.date===d),e=>e.amount));
+  const mx=Math.max(1,...inc,...ex);
+  const bars=days.map((d,i)=>{const x=20+(6-i)*52,h1=inc[i]/mx*110,h2=ex[i]/mx*110;return `<rect class="bar" x="${x}" y="${130-h1}" width="16" height="${h1}" rx="3" fill="var(--grn)" style="animation-delay:${i*70}ms"/><rect class="bar" x="${x+18}" y="${130-h2}" width="16" height="${h2}" rx="3" fill="var(--red)" opacity=".75" style="animation-delay:${i*70+40}ms"/><text x="${x+17}" y="148" text-anchor="middle" font-size="11" fill="var(--mu)">${new Date(d+"T00:00:00").toLocaleDateString("ar-SD",{weekday:"short"})}</text>`}).join("");
+  return `<div class="card"><h3>آخر ٧ أيام</h3><div class="lg"><span><i style="background:var(--grn)"></i>الدخل</span><span><i style="background:var(--red)"></i>المصروف</span></div><svg viewBox="0 0 380 156" width="100%" role="img" aria-label="الدخل والمصروف لآخر سبعة أيام"><line x1="10" x2="370" y1="130" y2="130" stroke="var(--bd)"/>${bars}</svg></div>`;
+}
+document.addEventListener("pointerdown",e=>{const r=e.target.closest(".row,tr");if(r)window.LB=r;const b=e.target.closest(".btn,.big,.chip,.act,.nav button,.x");if(!b)return;const k=b.getBoundingClientRect(),z=Math.max(k.width,k.height)*2,p=document.createElement("span");p.className="rp";p.style.cssText=`width:${z}px;height:${z}px;left:${e.clientX-k.left-z/2}px;top:${e.clientY-k.top-z/2}px`;b.appendChild(p);setTimeout(()=>p.remove(),650)});
+try{if(sessionStorage.getItem("sp"))$("splash").remove();else{sessionStorage.setItem("sp","1");setTimeout(()=>$("splash").classList.add("off"),1100);setTimeout(()=>$("splash")?.remove(),1700)}}catch(e){$("splash").remove()}
+boot();
+</script>
+</body>
+</html>
